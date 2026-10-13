@@ -1,0 +1,31 @@
+[project]
+name = "sports-reel-engine"
+version = "0.1.0"
+description = "Turns sports stills and a music track into a beat-synced 9:16 Final Cut Pro timeline"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "google-genai",
+    "librosa",
+    "numpy",
+    "pillow",
+    "pillow-heif>=1.8.1",
+    "pydantic>=2",
+    "soundfile",
+]
+
+[project.scripts]
+sports-reel = "sports_reel.cli:main"
+
+[dependency-groups]
+dev = ["pytest"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["sports_reel"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
