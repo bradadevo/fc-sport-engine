@@ -27,6 +27,9 @@ def match(tmp_path, monkeypatch):
     monkeypatch.setattr(cli.vision, "create_client", lambda: object())
     # Never read or write the real learned style during tests
     monkeypatch.setattr(cli.style, "STYLE_PATH", tmp_path / "style.json")
+    # D suggestions: a fixed, visible adjustment unless a test installs its own
+    monkeypatch.setattr(cli.adjust, "suggest", lambda client, img, model, taste_notes="", usage=None:
+                        cli.adjust.no_changes("test").model_copy(update={"exposure": 0.5, "warmth": 20}))
     return folder, luts
 
 
@@ -59,7 +62,7 @@ def test_keeps_top_photos_with_two_versions_and_leaves_originals_alone(match, mo
 
     out = folder / "Culled - Instagram post"
     made = sorted(p for p in os.listdir(out) if p.endswith(".jpg"))
-    assert made == [f"DSC{n}_{v}.jpg" for n in ("0001", "0003", "0004") for v in "ABCO"]
+    assert made == [f"DSC{n}_{v}.jpg" for n in ("0001", "0003", "0004") for v in "ABCDO"]
     with Image.open(out / "DSC0001_A.jpg") as img:
         assert img.size == (1080, 1350)
     assert {p: os.stat(folder / p).st_mtime_ns for p in before} == before
@@ -108,7 +111,7 @@ def test_no_luts_still_enhances(match, monkeypatch, tmp_path):
     empty.mkdir()
     run(folder, empty, "--size", "original", "--keep", "2")
     out = folder / "Culled - Original size"
-    assert len([p for p in os.listdir(out) if p.endswith(".jpg")]) == 8  # 2 keepers x O, A, B, C
+    assert len([p for p in os.listdir(out) if p.endswith(".jpg")]) == 10  # 2 keepers x O, A, B, C, D
 
 
 def test_keep_all_edits_every_photo(match, monkeypatch, capsys):
@@ -137,7 +140,7 @@ def test_original_size_keeps_pixel_dimensions(match, monkeypatch):
     run(folder, luts, "--size", "original", "--keep", "1")
     out = folder / "Culled - Original size"
     made = sorted(out.glob("*.jpg"))
-    assert len(made) == 4
+    assert len(made) == 5
     for path in made:
         with Image.open(path) as img:
             assert img.size == (600, 400)
@@ -164,7 +167,7 @@ def test_estimate_only_spends_nothing_and_writes_nothing(match, monkeypatch, cap
     assert not any(p.startswith("Culled") for p in os.listdir(folder))
     assert "6 to rate with Gemini" in printed
     assert "up to 2 keepers" in printed
-    assert "Tokens:  about 19,200" in printed
+    assert "Tokens:  about 24,200" in printed  # 6 ratings x 3,200 + 2 D suggestions x 2,500
 
 
 def test_estimate_counts_remembered_photos_and_uses_their_token_average(match, monkeypatch, capsys):
@@ -179,7 +182,7 @@ def test_estimate_counts_remembered_photos_and_uses_their_token_average(match, m
     run(folder, luts, "--size", "instagram", "--keep", "all", "--estimate")
     printed = capsys.readouterr().out
     assert "5 already rated, 1 to rate" in printed
-    assert "about 1,000 (1 ratings" in printed
+    assert "1 ratings x ~1,000" in printed
 
 
 def test_declining_the_confirmation_changes_nothing(match, monkeypatch, capsys):
@@ -259,3 +262,36 @@ def test_default_is_natural_edits_without_luts(match, monkeypatch, capsys):
     with Image.open(out / f"{stem}_A.jpg") as a, Image.open(out / f"{stem}_C.jpg") as c:
         sat = lambda im: np.asarray(im.convert("HSV"), dtype=np.float32)[..., 1].mean()
         assert sat(c) > sat(a)  # C is the punchier version
+
+
+def test_d_suggestions_change_only_d(match, monkeypatch):
+    folder, luts = match
+    FakeGemini(monkeypatch, scores=[9])
+
+    def run_with(adjustments, out_name):
+        monkeypatch.setattr(cli.adjust, "suggest", lambda client, img, model, taste_notes="", usage=None: adjustments)
+        cli.main([str(folder), "--size", "instagram", "--keep", "1", "--out", str(folder / out_name), "--refresh"])
+        return folder / out_name
+
+    none = run_with(cli.adjust.no_changes("none"), "plain")
+    strong = run_with(cli.adjust.no_changes("strong").model_copy(update={"exposure": 1.0, "vibrance": 30}), "strong")
+    (d_file,) = list(none.glob("*_D.jpg"))
+    stem = d_file.name[:-6]
+    pixels = lambda f: np.asarray(Image.open(f), dtype=int)
+    for version in "OABC":
+        assert np.array_equal(pixels(none / f"{stem}_{version}.jpg"), pixels(strong / f"{stem}_{version}.jpg")), version
+    assert np.abs(pixels(none / f"{stem}_D.jpg") - pixels(strong / f"{stem}_D.jpg")).mean() > 5
+    rows = [r for r in csv.DictReader(open(strong / "cull_report.csv")) if r["kept"] == "yes"]
+    assert "exposure +1.0" in rows[0]["d_adjustments"] and "strong" in rows[0]["d_adjustments"]
+
+
+def test_failed_suggestion_still_writes_d(match, monkeypatch, capsys):
+    folder, luts = match
+    FakeGemini(monkeypatch, scores=[9])
+
+    def boom(*args, **kwargs):
+        raise RuntimeError("503 high demand")
+    monkeypatch.setattr(cli.adjust, "suggest", boom)
+    run(folder, luts, "--size", "instagram", "--keep", "1")
+    assert len(list((folder / "Culled - Instagram post").glob("*_D.jpg"))) == 1
+    assert "no suggestions (Gemini failed" in capsys.readouterr().out

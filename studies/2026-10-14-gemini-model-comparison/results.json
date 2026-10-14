@@ -1,0 +1,1610 @@
+{
+ "gemini-3.8-flash": [
+  {
+   "group": "favorite",
+   "photo": "Screenshot 2026-10-14 at 7.08.47\u202fPM.heic",
+   "score": 7,
+   "shape": "4:5",
+   "crop": [
+    0.11,
+    0.0,
+    0.71,
+    1.0
+   ],
+   "subject": [
+    0.43,
+    0.05,
+    0.71,
+    0.99
+   ],
+   "seconds": 12.3,
+   "tokens": 3352
+  },
+  {
+   "group": "favorite",
+   "photo": "Screenshot 2026-10-14 at 7.09.16\u202fPM.heic",
+   "score": 7,
+   "shape": "1:1",
+   "crop": [
+    0.08,
+    0.08,
+    0.98,
+    0.98
+   ],
+   "subject": [
+    0.13,
+    0.11,
+    0.97,
+    0.96
+   ],
+   "seconds": 9.2,
+   "tokens": 2728
+  },
+  {
+   "group": "favorite",
+   "photo": "DSC02125 copy.png",
+   "score": 8,
+   "shape": "2:3",
+   "crop": [
+    0.01,
+    0.13,
+    1.0,
+    0.97
+   ],
+   "subject": [
+    0.428,
+    0.37,
+    0.849,
+    0.92
+   ],
+   "seconds": 10.6,
+   "tokens": 3009
+  },
+  {
+   "group": "favorite",
+   "photo": "DSC02263 copy.png",
+   "score": 7,
+   "shape": "3:2",
+   "crop": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "subject": [
+    0.03,
+    0.03,
+    0.98,
+    0.98
+   ],
+   "seconds": 7.2,
+   "tokens": 2397
+  },
+  {
+   "group": "favorite",
+   "photo": "DSC02676.ARW",
+   "score": 6,
+   "shape": "4:5",
+   "crop": [
+    0.41,
+    0.12,
+    0.87,
+    0.98
+   ],
+   "subject": [
+    0.43,
+    0.19,
+    1.0,
+    1.0
+   ],
+   "seconds": 11.5,
+   "tokens": 2793
+  },
+  {
+   "group": "favorite",
+   "photo": "DSC02928-EDIT-EDIT.jpg",
+   "score": 6,
+   "shape": "4:5",
+   "crop": [
+    0.16,
+    0.2,
+    0.98,
+    0.98
+   ],
+   "subject": [
+    0.56,
+    0.37,
+    0.81,
+    0.88
+   ],
+   "seconds": 7.3,
+   "tokens": 2430
+  },
+  {
+   "group": "favorite",
+   "photo": "DSC03070.JPG",
+   "score": 4,
+   "shape": "2:3",
+   "crop": [
+    0.22,
+    0.1,
+    0.62,
+    1.0
+   ],
+   "subject": [
+    0.25,
+    0.24,
+    0.58,
+    1.0
+   ],
+   "seconds": 10.3,
+   "tokens": 2936
+  },
+  {
+   "group": "favorite",
+   "photo": "Screenshot 2026-10-09 at 7.47.42\u202fPM.heic",
+   "score": 7,
+   "shape": "1:1",
+   "crop": [
+    0.08,
+    0.11,
+    0.92,
+    0.79
+   ],
+   "subject": [
+    0.134,
+    0.298,
+    0.528,
+    0.68
+   ],
+   "seconds": 20.7,
+   "tokens": 4294
+  },
+  {
+   "group": "ordinary",
+   "photo": "WhatsApp Image 2026-10-12 at 12.03.46 (8).jpeg",
+   "score": 2,
+   "shape": "16:9",
+   "crop": [
+    0.395,
+    0.41,
+    0.975,
+    0.9
+   ],
+   "subject": [
+    0.424,
+    0.463,
+    0.528,
+    0.852
+   ],
+   "seconds": 7.4,
+   "tokens": 2565
+  },
+  {
+   "group": "ordinary",
+   "photo": "WhatsApp Image 2026-10-12 at 12.03.48 (16).jpeg",
+   "score": 5,
+   "shape": "2:3",
+   "crop": [
+    0.34,
+    0.18,
+    0.7,
+    0.94
+   ],
+   "subject": [
+    0.42,
+    0.26,
+    0.53,
+    0.89
+   ],
+   "seconds": 10.9,
+   "tokens": 3082
+  },
+  {
+   "group": "ordinary",
+   "photo": "WhatsApp Image 2026-10-12 at 12.03.50 (13).jpeg",
+   "score": 4,
+   "shape": "16:9",
+   "crop": [
+    0.0,
+    0.18,
+    0.932,
+    0.71
+   ],
+   "subject": [
+    0.026,
+    0.281,
+    0.18,
+    0.654
+   ],
+   "seconds": 11.0,
+   "tokens": 3028
+  },
+  {
+   "group": "ordinary",
+   "photo": "WhatsApp Image 2026-10-12 at 12.03.51 (15).jpeg",
+   "score": 3,
+   "shape": "2:3",
+   "crop": [
+    0.09,
+    0.32,
+    0.44,
+    0.85
+   ],
+   "subject": [
+    0.27,
+    0.55,
+    0.37,
+    0.82
+   ],
+   "seconds": 5.6,
+   "tokens": 2381
+  },
+  {
+   "group": "ordinary",
+   "photo": "WhatsApp Image 2026-10-12 at 12.03.53 (18).jpeg",
+   "score": 4,
+   "shape": "2:3",
+   "crop": [
+    0.505,
+    0.212,
+    0.727,
+    0.712
+   ],
+   "subject": [
+    0.591,
+    0.301,
+    0.686,
+    0.661
+   ],
+   "seconds": 9.4,
+   "tokens": 2997
+  },
+  {
+   "group": "ordinary",
+   "photo": "DSC02616 Copy Copy.JPG",
+   "score": 6,
+   "shape": "2:3",
+   "crop": [
+    0.0,
+    0.03,
+    1.0,
+    0.97
+   ],
+   "subject": [
+    0.12,
+    0.07,
+    0.76,
+    0.94
+   ],
+   "seconds": 6.9,
+   "tokens": 2542
+  },
+  {
+   "group": "ordinary",
+   "photo": "DSC02887-EDIT.jpg",
+   "score": 5,
+   "shape": "4:5",
+   "crop": [
+    0.205,
+    0.135,
+    0.711,
+    0.895
+   ],
+   "subject": [
+    0.323,
+    0.198,
+    0.583,
+    0.793
+   ],
+   "seconds": 8.8,
+   "tokens": 2648
+  },
+  {
+   "group": "ordinary",
+   "photo": "Screenshot 2026-10-09 at 6.27.27\u202fPM.heic",
+   "score": 7,
+   "shape": "1:1",
+   "crop": [
+    0.15,
+    0.11,
+    0.91,
+    0.87
+   ],
+   "subject": [
+    0.49,
+    0.17,
+    0.88,
+    0.79
+   ],
+   "seconds": 8.0,
+   "tokens": 2509
+  },
+  {
+   "group": "favorite",
+   "photo": "Screenshot 2026-10-14 at 7.08.47\u202fPM.heic",
+   "score": 7,
+   "shape": "4:5",
+   "crop": [
+    0.11,
+    0.0,
+    0.75,
+    1.0
+   ],
+   "subject": [
+    0.43,
+    0.04,
+    0.71,
+    0.99
+   ],
+   "seconds": 11.9,
+   "tokens": 3213
+  },
+  {
+   "group": "favorite",
+   "photo": "Screenshot 2026-10-14 at 7.09.16\u202fPM.heic",
+   "score": 7,
+   "shape": "1:1",
+   "crop": [
+    0.1,
+    0.0,
+    0.98,
+    1.0
+   ],
+   "subject": [
+    0.13,
+    0.11,
+    0.97,
+    0.96
+   ],
+   "seconds": 16.8,
+   "tokens": 3967
+  },
+  {
+   "group": "ordinary",
+   "photo": "WhatsApp Image 2026-10-12 at 12.03.46 (8).jpeg",
+   "score": 2,
+   "shape": "16:9",
+   "crop": [
+    0.38,
+    0.44,
+    0.98,
+    0.84
+   ],
+   "subject": [
+    423.0,
+    465.0,
+    527.0,
+    847.0
+   ],
+   "seconds": 4.5,
+   "tokens": 2153
+  },
+  {
+   "group": "ordinary",
+   "photo": "DSC02616 Copy Copy.JPG",
+   "score": 6,
+   "shape": "2:3",
+   "crop": [
+    0.04,
+    0.03,
+    0.85,
+    0.98
+   ],
+   "subject": [
+    0.12,
+    0.07,
+    0.74,
+    0.94
+   ],
+   "seconds": 6.6,
+   "tokens": 2385
+  }
+ ],
+ "gemini-pro-latest": [
+  {
+   "group": "favorite",
+   "photo": "Screenshot 2026-10-14 at 7.08.47\u202fPM.heic",
+   "score": 8,
+   "shape": "1:1",
+   "crop": [
+    0.05,
+    0.0,
+    0.76,
+    1.0
+   ],
+   "subject": [
+    0.13,
+    0.05,
+    0.7,
+    0.99
+   ],
+   "seconds": 23.7,
+   "tokens": 4446
+  },
+  {
+   "group": "favorite",
+   "photo": "Screenshot 2026-10-14 at 7.09.16\u202fPM.heic",
+   "score": 8,
+   "shape": "1:1",
+   "crop": [
+    0.15,
+    0.0,
+    0.968,
+    1.0
+   ],
+   "subject": [
+    0.13,
+    0.1,
+    0.96,
+    0.96
+   ],
+   "seconds": 42.5,
+   "tokens": 6950
+  },
+  {
+   "group": "favorite",
+   "photo": "DSC02125 copy.png",
+   "score": 9,
+   "shape": "9:16",
+   "crop": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "subject": [
+    0.4,
+    0.36,
+    0.85,
+    0.92
+   ],
+   "seconds": 12.9,
+   "tokens": 3105
+  },
+  {
+   "group": "favorite",
+   "photo": "DSC02263 copy.png",
+   "score": 7,
+   "shape": "3:2",
+   "crop": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "subject": [
+    0.03,
+    0.02,
+    0.98,
+    0.98
+   ],
+   "seconds": 7.5,
+   "tokens": 2332
+  },
+  {
+   "group": "favorite",
+   "photo": "DSC02676.ARW",
+   "score": 7,
+   "shape": "1:1",
+   "crop": [
+    0.333,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "subject": [
+    0.43,
+    0.19,
+    0.99,
+    1.0
+   ],
+   "seconds": 23.1,
+   "tokens": 4480
+  },
+  {
+   "group": "favorite",
+   "photo": "DSC02928-EDIT-EDIT.jpg",
+   "score": 4,
+   "shape": "1:1",
+   "crop": [
+    0.15,
+    0.286,
+    0.98,
+    0.95
+   ],
+   "subject": [
+    0.24,
+    0.37,
+    0.96,
+    0.88
+   ],
+   "seconds": 13.4,
+   "tokens": 3133
+  },
+  {
+   "group": "favorite",
+   "photo": "DSC03070.JPG",
+   "score": 4,
+   "shape": "4:5",
+   "crop": [
+    0.18,
+    0.15,
+    0.63,
+    1.0
+   ],
+   "subject": [
+    0.24,
+    0.24,
+    0.58,
+    1.0
+   ],
+   "seconds": 16.7,
+   "tokens": 3474
+  },
+  {
+   "group": "favorite",
+   "photo": "Screenshot 2026-10-09 at 7.47.42\u202fPM.heic",
+   "score": 7,
+   "shape": "1:1",
+   "crop": [
+    0.05,
+    0.15,
+    0.95,
+    0.87
+   ],
+   "subject": [
+    0.12,
+    0.3,
+    0.53,
+    0.68
+   ],
+   "seconds": 16.2,
+   "tokens": 3533
+  },
+  {
+   "group": "ordinary",
+   "photo": "WhatsApp Image 2026-10-12 at 12.03.46 (8).jpeg",
+   "score": 2,
+   "shape": "16:9",
+   "crop": [
+    0.0,
+    0.15,
+    1.0,
+    0.99375
+   ],
+   "subject": [
+    0.42,
+    0.46,
+    0.52,
+    0.85
+   ],
+   "seconds": 15.3,
+   "tokens": 3426
+  },
+  {
+   "group": "ordinary",
+   "photo": "WhatsApp Image 2026-10-12 at 12.03.48 (16).jpeg",
+   "score": 5,
+   "shape": "2:3",
+   "crop": [
+    0.22,
+    0.15,
+    0.72,
+    0.9
+   ],
+   "subject": [
+    0.43,
+    0.27,
+    0.52,
+    0.88
+   ],
+   "seconds": 16.0,
+   "tokens": 3449
+  },
+  {
+   "group": "ordinary",
+   "photo": "WhatsApp Image 2026-10-12 at 12.03.50 (13).jpeg",
+   "score": 5,
+   "shape": "16:9",
+   "crop": [
+    0.0,
+    0.15,
+    1.0,
+    0.7125
+   ],
+   "subject": [
+    0.02,
+    0.27,
+    0.17,
+    0.65
+   ],
+   "seconds": 10.1,
+   "tokens": 2748
+  },
+  {
+   "group": "ordinary",
+   "photo": "WhatsApp Image 2026-10-12 at 12.03.51 (15).jpeg",
+   "score": 4,
+   "shape": "3:2",
+   "crop": [
+    0.05,
+    0.3,
+    0.75,
+    0.9
+   ],
+   "subject": [
+    0.27,
+    0.55,
+    0.37,
+    0.82
+   ],
+   "seconds": 11.4,
+   "tokens": 2848
+  },
+  {
+   "group": "ordinary",
+   "photo": "WhatsApp Image 2026-10-12 at 12.03.53 (18).jpeg",
+   "score": 3,
+   "shape": "4:5",
+   "crop": [
+    0.42,
+    0.15,
+    0.82,
+    0.65
+   ],
+   "subject": [
+    0.59,
+    0.3,
+    0.69,
+    0.66
+   ],
+   "seconds": 15.7,
+   "tokens": 3462
+  },
+  {
+   "group": "ordinary",
+   "photo": "DSC02616 Copy Copy.JPG",
+   "score": 5,
+   "shape": "2:3",
+   "crop": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "subject": [
+    0.12,
+    0.07,
+    0.75,
+    0.93
+   ],
+   "seconds": 17.5,
+   "tokens": 3591
+  },
+  {
+   "group": "ordinary",
+   "photo": "DSC02887-EDIT.jpg",
+   "score": 4,
+   "shape": "4:5",
+   "crop": [
+    0.1,
+    0.1,
+    0.74,
+    0.9
+   ],
+   "subject": [
+    0.32,
+    0.19,
+    0.58,
+    0.79
+   ],
+   "seconds": 18.1,
+   "tokens": 3591
+  },
+  {
+   "group": "ordinary",
+   "photo": "Screenshot 2026-10-09 at 6.27.27\u202fPM.heic",
+   "score": 7,
+   "shape": "1:1",
+   "crop": [
+    0.0,
+    0.1,
+    1.0,
+    0.9
+   ],
+   "subject": [
+    0.19,
+    0.16,
+    0.88,
+    0.84
+   ],
+   "seconds": 17.2,
+   "tokens": 3705
+  },
+  {
+   "group": "favorite",
+   "photo": "Screenshot 2026-10-14 at 7.08.47\u202fPM.heic",
+   "score": 8,
+   "shape": "1:1",
+   "crop": [
+    0.08,
+    0.0,
+    0.74,
+    1.0
+   ],
+   "subject": [
+    0.43,
+    0.05,
+    0.7,
+    1.0
+   ],
+   "seconds": 14.7,
+   "tokens": 3214
+  },
+  {
+   "group": "favorite",
+   "photo": "Screenshot 2026-10-14 at 7.09.16\u202fPM.heic",
+   "score": 8,
+   "shape": "3:2",
+   "crop": [
+    0.05,
+    0.05,
+    1.0,
+    1.0
+   ],
+   "subject": [
+    0.13,
+    0.1,
+    0.96,
+    0.95
+   ],
+   "seconds": 24.4,
+   "tokens": 4317
+  },
+  {
+   "group": "ordinary",
+   "photo": "WhatsApp Image 2026-10-12 at 12.03.46 (8).jpeg",
+   "score": 2,
+   "shape": "16:9",
+   "crop": [
+    0.0,
+    0.35,
+    1.0,
+    0.91
+   ],
+   "subject": [
+    0.42,
+    0.46,
+    0.52,
+    0.85
+   ],
+   "seconds": 11.2,
+   "tokens": 2920
+  },
+  {
+   "group": "ordinary",
+   "photo": "DSC02616 Copy Copy.JPG",
+   "score": 6,
+   "shape": "2:3",
+   "crop": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "subject": [
+    0.12,
+    0.07,
+    0.75,
+    0.93
+   ],
+   "seconds": 16.4,
+   "tokens": 3442
+  }
+ ],
+ "gemini-3.1-pro-preview": [
+  {
+   "group": "favorite",
+   "photo": "Screenshot 2026-10-14 at 7.08.47\u202fPM.heic",
+   "score": 8,
+   "shape": "1:1",
+   "crop": [
+    0.08,
+    0.0,
+    0.74,
+    1.0
+   ],
+   "subject": [
+    0.13,
+    0.05,
+    0.7,
+    0.99
+   ],
+   "seconds": 18.8,
+   "tokens": 3623
+  },
+  {
+   "group": "favorite",
+   "photo": "Screenshot 2026-10-14 at 7.09.16\u202fPM.heic",
+   "score": 9,
+   "shape": "3:2",
+   "crop": [
+    0.05,
+    0.05,
+    0.99,
+    0.99
+   ],
+   "subject": [
+    0.13,
+    0.1,
+    0.97,
+    0.96
+   ],
+   "seconds": 31.2,
+   "tokens": 5475
+  },
+  {
+   "group": "favorite",
+   "photo": "DSC02125 copy.png",
+   "score": 9,
+   "shape": "4:5",
+   "crop": [
+    0.275,
+    0.1,
+    0.975,
+    0.975
+   ],
+   "subject": [
+    0.4,
+    0.36,
+    0.85,
+    0.92
+   ],
+   "seconds": 14.6,
+   "tokens": 3560
+  },
+  {
+   "group": "favorite",
+   "photo": "DSC02263 copy.png",
+   "score": 8,
+   "shape": "3:2",
+   "crop": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "subject": [
+    0.031,
+    0.027,
+    0.997,
+    0.985
+   ],
+   "seconds": 5.9,
+   "tokens": 2127
+  },
+  {
+   "group": "favorite",
+   "photo": "DSC02676.ARW",
+   "score": 6,
+   "shape": "1:1",
+   "crop": [
+    0.35,
+    0.1,
+    0.95,
+    1.0
+   ],
+   "subject": [
+    0.43,
+    0.19,
+    0.99,
+    1.0
+   ],
+   "seconds": 17.8,
+   "tokens": 3792
+  },
+  {
+   "group": "favorite",
+   "photo": "DSC02928-EDIT-EDIT.jpg",
+   "score": 7,
+   "shape": "4:5",
+   "crop": [
+    0.18,
+    0.02,
+    0.96,
+    0.995
+   ],
+   "subject": [
+    0.24,
+    0.37,
+    0.96,
+    0.88
+   ],
+   "seconds": 10.5,
+   "tokens": 2689
+  },
+  {
+   "group": "favorite",
+   "photo": "DSC03070.JPG",
+   "score": 4,
+   "shape": "4:5",
+   "crop": [
+    0.2,
+    0.15,
+    0.65,
+    1.0
+   ],
+   "subject": [
+    0.24,
+    0.24,
+    0.58,
+    1.0
+   ],
+   "seconds": 13.8,
+   "tokens": 3075
+  },
+  {
+   "group": "favorite",
+   "photo": "Screenshot 2026-10-09 at 7.47.42\u202fPM.heic",
+   "score": 8,
+   "shape": "3:2",
+   "crop": [
+    0.05,
+    0.2,
+    0.95,
+    0.8
+   ],
+   "subject": [
+    0.13,
+    0.3,
+    0.52,
+    0.68
+   ],
+   "seconds": 30.6,
+   "tokens": 5469
+  },
+  {
+   "group": "ordinary",
+   "photo": "WhatsApp Image 2026-10-12 at 12.03.46 (8).jpeg",
+   "score": 2,
+   "shape": "16:9",
+   "crop": [
+    0.0,
+    0.4,
+    1.0,
+    0.962
+   ],
+   "subject": [
+    0.423,
+    0.468,
+    0.524,
+    0.852
+   ],
+   "seconds": 12.6,
+   "tokens": 3051
+  },
+  {
+   "group": "ordinary",
+   "photo": "WhatsApp Image 2026-10-12 at 12.03.48 (16).jpeg",
+   "score": 4,
+   "shape": "2:3",
+   "crop": [
+    0.215,
+    0.15,
+    0.745,
+    0.95
+   ],
+   "subject": [
+    0.43,
+    0.26,
+    0.53,
+    0.88
+   ],
+   "seconds": 7.0,
+   "tokens": 2382
+  },
+  {
+   "group": "ordinary",
+   "photo": "WhatsApp Image 2026-10-12 at 12.03.50 (13).jpeg",
+   "score": 6,
+   "shape": "16:9",
+   "crop": [
+    0.0,
+    0.05,
+    1.0,
+    0.84
+   ],
+   "subject": [
+    0.02,
+    0.27,
+    0.18,
+    0.65
+   ],
+   "seconds": 10.9,
+   "tokens": 2880
+  },
+  {
+   "group": "ordinary",
+   "photo": "WhatsApp Image 2026-10-12 at 12.03.51 (15).jpeg",
+   "score": 3,
+   "shape": "16:9",
+   "crop": [
+    0.0,
+    0.3,
+    1.0,
+    0.8625
+   ],
+   "subject": [
+    0.27,
+    0.55,
+    0.37,
+    0.82
+   ],
+   "seconds": 11.5,
+   "tokens": 2914
+  },
+  {
+   "group": "ordinary",
+   "photo": "WhatsApp Image 2026-10-12 at 12.03.53 (18).jpeg",
+   "score": 3,
+   "shape": "2:3",
+   "crop": [
+    0.462,
+    0.1,
+    0.818,
+    0.9
+   ],
+   "subject": [
+    0.59,
+    0.29,
+    0.69,
+    0.66
+   ],
+   "seconds": 19.5,
+   "tokens": 3907
+  },
+  {
+   "group": "ordinary",
+   "photo": "DSC02616 Copy Copy.JPG",
+   "score": 6,
+   "shape": "4:5",
+   "crop": [
+    0.05,
+    0.02,
+    0.82,
+    0.98
+   ],
+   "subject": [
+    0.12,
+    0.07,
+    0.75,
+    0.93
+   ],
+   "seconds": 17.0,
+   "tokens": 3553
+  },
+  {
+   "group": "ordinary",
+   "photo": "DSC02887-EDIT.jpg",
+   "score": 4,
+   "shape": "2:3",
+   "crop": [
+    0.15,
+    0.1,
+    0.683,
+    0.9
+   ],
+   "subject": [
+    0.32,
+    0.19,
+    0.58,
+    0.79
+   ],
+   "seconds": 17.1,
+   "tokens": 3649
+  },
+  {
+   "group": "ordinary",
+   "photo": "Screenshot 2026-10-09 at 6.27.27\u202fPM.heic",
+   "score": 7,
+   "shape": "4:5",
+   "crop": [
+    0.1,
+    0.1,
+    0.9,
+    0.9
+   ],
+   "subject": [
+    0.19,
+    0.16,
+    0.88,
+    0.84
+   ],
+   "seconds": 16.6,
+   "tokens": 3728
+  },
+  {
+   "group": "favorite",
+   "photo": "Screenshot 2026-10-14 at 7.08.47\u202fPM.heic",
+   "score": 7,
+   "shape": "4:5",
+   "crop": [
+    0.08,
+    0.0,
+    0.64,
+    1.0
+   ],
+   "subject": [
+    0.13,
+    0.05,
+    0.7,
+    1.0
+   ],
+   "seconds": 14.3,
+   "tokens": 3241
+  },
+  {
+   "group": "favorite",
+   "photo": "Screenshot 2026-10-14 at 7.09.16\u202fPM.heic",
+   "score": 9,
+   "shape": "1:1",
+   "crop": [
+    0.13,
+    0.0,
+    0.96,
+    1.0
+   ],
+   "subject": [
+    0.13,
+    0.1,
+    0.96,
+    0.96
+   ],
+   "seconds": 47.1,
+   "tokens": 7956
+  },
+  {
+   "group": "ordinary",
+   "photo": "WhatsApp Image 2026-10-12 at 12.03.46 (8).jpeg",
+   "score": 2,
+   "shape": "16:9",
+   "crop": [
+    0.0,
+    0.3,
+    1.0,
+    0.8625
+   ],
+   "subject": [
+    0.68,
+    0.48,
+    0.77,
+    0.78
+   ],
+   "seconds": 17.2,
+   "tokens": 3768
+  },
+  {
+   "group": "ordinary",
+   "photo": "DSC02616 Copy Copy.JPG",
+   "score": 6,
+   "shape": "2:3",
+   "crop": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "subject": [
+    0.12,
+    0.07,
+    0.75,
+    0.93
+   ],
+   "seconds": 22.9,
+   "tokens": 4512
+  }
+ ],
+ "gemini-4-argon": [
+  {
+   "group": "favorite",
+   "photo": "Screenshot 2026-10-14 at 7.08.47\u202fPM.heic",
+   "score": 8,
+   "shape": "4:5",
+   "crop": [
+    0.11,
+    0.0,
+    0.71,
+    1.0
+   ],
+   "subject": [
+    0.132,
+    0.044,
+    0.703,
+    0.996
+   ],
+   "seconds": 6.4,
+   "tokens": 2753
+  },
+  {
+   "group": "favorite",
+   "photo": "Screenshot 2026-10-14 at 7.09.16\u202fPM.heic",
+   "score": 8,
+   "shape": "4:5",
+   "crop": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "subject": [
+    0.133,
+    0.107,
+    0.773,
+    0.962
+   ],
+   "seconds": 5.4,
+   "tokens": 2720
+  },
+  {
+   "group": "favorite",
+   "photo": "DSC02125 copy.png",
+   "score": 8,
+   "shape": "4:5",
+   "crop": [
+    265.0,
+    325.0,
+    968.0,
+    949.0
+   ],
+   "subject": [
+    410.0,
+    367.0,
+    849.0,
+    920.0
+   ],
+   "seconds": 6.7,
+   "tokens": 2714
+  },
+  {
+   "group": "favorite",
+   "photo": "DSC02263 copy.png",
+   "score": 6,
+   "shape": "3:2",
+   "crop": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "subject": [
+    0.03,
+    0.03,
+    0.99,
+    1.0
+   ],
+   "seconds": 5.7,
+   "tokens": 2705
+  },
+  {
+   "group": "favorite",
+   "photo": "DSC02676.ARW",
+   "score": 6,
+   "shape": "4:5",
+   "crop": [
+    0.301,
+    0.114,
+    1.0,
+    1.0
+   ],
+   "subject": [
+    0.436,
+    0.195,
+    1.0,
+    1.0
+   ],
+   "seconds": 6.5,
+   "tokens": 2701
+  },
+  {
+   "group": "favorite",
+   "photo": "DSC02928-EDIT-EDIT.jpg",
+   "score": 6,
+   "shape": "4:5",
+   "crop": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "subject": [
+    74.0,
+    374.0,
+    961.0,
+    888.0
+   ],
+   "seconds": 5.0,
+   "tokens": 2715
+  },
+  {
+   "group": "favorite",
+   "photo": "DSC03070.JPG",
+   "score": 6,
+   "shape": "1:1",
+   "crop": [
+    0.0,
+    195.0,
+    643.0,
+    1000.0
+   ],
+   "subject": [
+    0.0,
+    244.0,
+    578.0,
+    1000.0
+   ],
+   "seconds": 4.5,
+   "tokens": 2684
+  },
+  {
+   "group": "favorite",
+   "photo": "Screenshot 2026-10-09 at 7.47.42\u202fPM.heic",
+   "score": 6,
+   "shape": "16:9",
+   "crop": [
+    68.0,
+    195.0,
+    931.0,
+    734.0
+   ],
+   "subject": [
+    129.0,
+    300.0,
+    532.0,
+    684.0
+   ],
+   "seconds": 5.8,
+   "tokens": 2695
+  },
+  {
+   "group": "ordinary",
+   "photo": "WhatsApp Image 2026-10-12 at 12.03.46 (8).jpeg",
+   "score": 2,
+   "shape": "16:9",
+   "crop": [
+    36.0,
+    399.0,
+    968.0,
+    923.0
+   ],
+   "subject": [
+    424.0,
+    467.0,
+    524.0,
+    854.0
+   ],
+   "seconds": 4.9,
+   "tokens": 2711
+  },
+  {
+   "group": "ordinary",
+   "photo": "WhatsApp Image 2026-10-12 at 12.03.48 (16).jpeg",
+   "score": 5,
+   "shape": "4:5",
+   "crop": [
+    313.0,
+    213.0,
+    698.0,
+    935.0
+   ],
+   "subject": [
+    430.0,
+    267.0,
+    531.0,
+    886.0
+   ],
+   "seconds": 7.7,
+   "tokens": 2706
+  },
+  {
+   "group": "ordinary",
+   "photo": "WhatsApp Image 2026-10-12 at 12.03.50 (13).jpeg",
+   "score": 6,
+   "shape": "3:2",
+   "crop": [
+    0.015,
+    0.055,
+    0.995,
+    0.755
+   ],
+   "subject": [
+    0.025,
+    258.0,
+    0.985,
+    0.655
+   ],
+   "seconds": 5.7,
+   "tokens": 2760
+  },
+  {
+   "group": "ordinary",
+   "photo": "WhatsApp Image 2026-10-12 at 12.03.51 (15).jpeg",
+   "score": 3,
+   "shape": "4:5",
+   "crop": [
+    89.0,
+    329.0,
+    401.0,
+    869.0
+   ],
+   "subject": [
+    105.0,
+    356.0,
+    385.0,
+    835.0
+   ],
+   "seconds": 4.6,
+   "tokens": 2705
+  },
+  {
+   "group": "ordinary",
+   "photo": "WhatsApp Image 2026-10-12 at 12.03.53 (18).jpeg",
+   "score": 5,
+   "shape": "4:5",
+   "crop": [
+    511.0,
+    258.0,
+    755.0,
+    714.0
+   ],
+   "subject": [
+    592.0,
+    300.0,
+    685.0,
+    661.0
+   ],
+   "seconds": 9.8,
+   "tokens": 2735
+  },
+  {
+   "group": "ordinary",
+   "photo": "DSC02616 Copy Copy.JPG",
+   "score": 6,
+   "shape": "2:3",
+   "crop": [
+    0.088,
+    0.036,
+    0.96,
+    0.966
+   ],
+   "subject": [
+    0.123,
+    0.068,
+    755.0,
+    0.938
+   ],
+   "seconds": 4.6,
+   "tokens": 2691
+  },
+  {
+   "group": "ordinary",
+   "photo": "DSC02887-EDIT.jpg",
+   "score": 5,
+   "shape": "4:5",
+   "crop": [
+    211.0,
+    162.0,
+    665.0,
+    844.0
+   ],
+   "subject": [
+    324.0,
+    196.0,
+    585.0,
+    790.0
+   ],
+   "seconds": 5.3,
+   "tokens": 2729
+  },
+  {
+   "group": "ordinary",
+   "photo": "Screenshot 2026-10-09 at 6.27.27\u202fPM.heic",
+   "score": 8,
+   "shape": "4:5",
+   "crop": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "subject": [
+    0.199,
+    0.168,
+    0.888,
+    0.84
+   ],
+   "seconds": 4.8,
+   "tokens": 2691
+  },
+  {
+   "group": "favorite",
+   "photo": "Screenshot 2026-10-14 at 7.08.47\u202fPM.heic",
+   "score": 8,
+   "shape": "4:5",
+   "crop": [
+    0.109,
+    0.0,
+    0.999,
+    0.999
+   ],
+   "subject": [
+    0.131,
+    0.04,
+    0.701,
+    0.996
+   ],
+   "seconds": 5.7,
+   "tokens": 2761
+  },
+  {
+   "group": "favorite",
+   "photo": "Screenshot 2026-10-14 at 7.09.16\u202fPM.heic",
+   "score": 6,
+   "shape": "4:5",
+   "crop": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ],
+   "subject": [
+    0.134,
+    0.106,
+    0.772,
+    0.962
+   ],
+   "seconds": 4.7,
+   "tokens": 2718
+  },
+  {
+   "group": "ordinary",
+   "photo": "WhatsApp Image 2026-10-12 at 12.03.46 (8).jpeg",
+   "score": 2,
+   "shape": "16:9",
+   "crop": [
+    38.0,
+    401.0,
+    979.0,
+    931.0
+   ],
+   "subject": [
+    424.0,
+    467.0,
+    524.0,
+    854.0
+   ],
+   "seconds": 6.8,
+   "tokens": 2728
+  },
+  {
+   "group": "ordinary",
+   "photo": "DSC02616 Copy Copy.JPG",
+   "score": 6,
+   "shape": "2:3",
+   "crop": [
+    19.0,
+    50.0,
+    967.0,
+    960.0
+   ],
+   "subject": [
+    122.0,
+    68.0,
+    756.0,
+    935.0
+   ],
+   "seconds": 4.7,
+   "tokens": 2680
+  }
+ ]
+}

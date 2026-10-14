@@ -117,15 +117,16 @@ Before starting, it shows an estimate and asks to confirm:
 ```
 Estimate:
   Photos:  74 found, 0 already rated, 74 to rate with Gemini
-  Tokens:  about 236,800 (74 ratings x ~3,200)
-  Rating:  6 min to 21 min (depends on how busy Gemini is)
-  Editing: about 1 min for up to 60 keepers x 4 versions (O, A, B, C)
-  Total:   about 7 min to 22 min
+  Tokens:  about 386,800 (74 ratings x ~3,200 + up to 60 D suggestions x ~2,500)
+  Gemini:  11 min to 38 min (depends on how busy Gemini is)
+  Editing: about 1 min for up to 60 keepers x 5 versions (O, A, B, C, D)
+  Total:   about 12 min to 39 min
 ```
 
-Gemini tokens depend on how many photos still need rating, not on how many
-you keep: every photo has to be rated to find the best ones. The keep amount
-changes the editing time. `--estimate` shows this and stops without using any
+Rating tokens depend on how many photos still need rating, not on how many you
+keep: every photo has to be rated to find the best ones. The keep amount
+changes the editing time and the number of D suggestions (one Gemini call per
+keeper, remembered for reruns). `--estimate` shows this and stops without using any
 tokens; `--yes` starts without the confirmation. At the end it reports the
 time taken and the tokens actually used.
 
@@ -137,7 +138,7 @@ How it decides and edits:
   moment; only the best frame of each is kept.
 - **Keeping**: the top-scoring moments, up to the number you asked for. Photos
   scored 3 or lower are never kept.
-- **Four files for each keeper**, side by side in one folder:
+- **Five files for each keeper**, side by side in one folder:
   - `_O`: the original, cropped only (same crop as A). No color, tone,
     clarity or sharpening changes.
   - `_A`: tight crop on the action (or Gemini's own framing with best crop),
@@ -146,6 +147,13 @@ How it decides and edits:
     with 10% less contrast, for a softer alternative.
   - `_C`: A's crop with a punchier natural edit: vibrance and extra contrast in
     the bright tones (shadows untouched).
+  - `_D`: A's crop with adjustments suggested by Gemini. Gemini looks at the
+    natural edit (with your taste in mind) and returns small Lightroom-style
+    slider moves: exposure, contrast, highlights, shadows, warmth, tint,
+    vibrance, clarity and a brightness lift for the players only. Our code
+    applies them; nothing is generated or redrawn, every slider is clamped to
+    a safe range, and shadows are never crushed. The sliders it moved and its
+    reason are listed in the report. D's suggestions never affect O, A, B or C.
   No LUTs are used unless you add `--luts`; then A and B get the two looks
   Gemini picks from your LUT folder and C is the natural edit.
 - **Enhancement**: each crop gets OpenCV gray-world white balance (capped, so
@@ -185,9 +193,17 @@ Everything goes into a new folder inside the photo folder, such as
 together with `cull_report.csv` listing every photo's score, reason, whether it
 was kept, its files and any note (such as low resolution). Reads JPEG, HEIC, PNG and
 camera RAW (Sony `.ARW` and others). Ratings are remembered (in a hidden
-`.match_cull_analysis.json` in the photo folder), so rerunning
+`.match_cull_analysis.json` in the photo folder, with D's suggestions in
+`.match_cull_adjustments.json`), so rerunning
 (for example with a different size) only asks Gemini about new or failed
 photos; `--refresh` redoes them all.
+
+## Studies
+
+- [Gemini model comparison (2026-10-14)](studies/2026-10-14-gemini-model-comparison/README.md):
+  which Gemini model best recognizes the photographer's taste. `gemini-3.8-flash`
+  stays the default; `gemini-3.1-pro-preview` ranked slightly better at twice the
+  time and cost.
 
 ## Development
 
@@ -200,9 +216,11 @@ learned look. They validate generated reel XML against the FCPXML 1.11 DTD that
 ships inside Final Cut Pro, when it is installed.
 
 ```text
+studies/        Write-ups and scripts for experiments behind design decisions
 match_cull/
   cli.py        Questions, rating, editing, report
   analysis.py   Gemini scoring, crop and look choice
+  adjust.py     Version D: Gemini's suggested slider adjustments, applied
   select.py     Bursts and keeper selection
   crops.py      Output sizes and crop rectangles
   enhance.py    Exposure, white balance, local contrast, subject lift, clarity

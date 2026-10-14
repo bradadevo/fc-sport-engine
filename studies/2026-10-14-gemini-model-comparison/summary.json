@@ -1,0 +1,38 @@
+{
+ "gemini-3.8-flash": {
+  "ranking": 0.84375,
+  "fav": 6.5,
+  "ordi": 4.5,
+  "repeat": 0.0,
+  "sec": 9.845000000000002,
+  "tok": 2870.45,
+  "total": 57409
+ },
+ "gemini-pro-latest": {
+  "ranking": 0.8203125,
+  "fav": 6.75,
+  "ordi": 4.375,
+  "repeat": 0.25,
+  "sec": 17.199999999999996,
+  "tok": 3608.3,
+  "total": 72166
+ },
+ "gemini-3.1-pro-preview": {
+  "ranking": 0.8984375,
+  "fav": 7.375,
+  "ordi": 4.375,
+  "repeat": 0.25,
+  "sec": 17.845,
+  "tok": 3767.55,
+  "total": 75351
+ },
+ "gemini-4-argon": {
+  "ranking": 0.8203125,
+  "fav": 6.75,
+  "ordi": 5.0,
+  "repeat": 0.5,
+  "sec": 5.765000000000001,
+  "tok": 2715.1,
+  "total": 54302
+ }
+}

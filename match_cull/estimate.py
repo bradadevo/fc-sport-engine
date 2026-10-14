@@ -14,6 +14,8 @@ import rawpy
 DEFAULT_TOKENS_PER_PHOTO = 3200
 # Tokens for the one-time 'learn my style' call (10 sample photos + answer)
 TASTE_TOKENS = 15000
+# Tokens and seconds for version D's suggested adjustments, one call per keeper
+ADJUST_TOKENS = 2500
 # Seconds per Gemini rating: when it is quiet, and when it is busy and retrying
 RATE_SECONDS = (5, 17)
 # Seconds to make all versions of a keeper (O, A, B, C), per megapixel of the original
@@ -29,16 +31,23 @@ class Estimate:
     tokens: int
     rate_seconds: tuple[float, float]
     edit_seconds: float
+    adjust_needed: int = 0  # keepers that still need D suggestions (upper bound)
 
     def lines(self) -> list[str]:
         lo, hi = self.rate_seconds
+        d_tokens = self.adjust_needed * ADJUST_TOKENS
+        lo, hi = lo + self.adjust_needed * RATE_SECONDS[0], hi + self.adjust_needed * RATE_SECONDS[1]
+        rating_tokens = (f"{self.to_rate} ratings x ~{self.tokens // max(self.to_rate, 1):,}"
+                         if self.to_rate else "")
+        d_part = f"up to {self.adjust_needed} D suggestions x ~{ADJUST_TOKENS:,}" if self.adjust_needed else ""
+        parts = " + ".join(p for p in (rating_tokens, d_part) if p)
         rows = [
             f"  Photos:  {self.total} found, {self.remembered} already rated, {self.to_rate} to rate with Gemini",
-            f"  Tokens:  about {self.tokens:,} ({self.to_rate} ratings x ~{self.tokens // max(self.to_rate, 1):,})"
-            if self.to_rate else "  Tokens:  none (every photo is already rated)",
-            f"  Rating:  {format_duration(lo)} to {format_duration(hi)} (depends on how busy Gemini is)"
-            if self.to_rate else "  Rating:  instant",
-            f"  Editing: about {format_duration(self.edit_seconds)} for up to {self.keep} keepers x 4 versions (O, A, B, C)",
+            f"  Tokens:  about {self.tokens + d_tokens:,} ({parts})"
+            if parts else "  Tokens:  none (every photo is already rated and suggested)",
+            f"  Gemini:  {format_duration(lo)} to {format_duration(hi)} (depends on how busy Gemini is)"
+            if parts else "  Gemini:  instant",
+            f"  Editing: about {format_duration(self.edit_seconds)} for up to {self.keep} keepers x 5 versions (O, A, B, C, D)",
             f"  Total:   about {format_duration(lo + self.edit_seconds)} to {format_duration(hi + self.edit_seconds)}",
         ]
         return rows
@@ -69,7 +78,7 @@ def format_duration(seconds: float) -> str:
 
 
 def estimate(photo_paths: list[str], remembered: set[str], keep: int,
-             tokens_per_photo: float | None = None) -> Estimate:
+             tokens_per_photo: float | None = None, adjust_needed: int = 0) -> Estimate:
     """keep is the number of keepers asked for (already capped to the photo
     count). Rating cost depends on the photos not yet rated, whatever the keep
     amount; editing time depends on the keepers' size."""
@@ -84,5 +93,6 @@ def estimate(photo_paths: list[str], remembered: set[str], keep: int,
         keep=keep,
         tokens=round(len(to_rate) * per_photo),
         rate_seconds=(len(to_rate) * RATE_SECONDS[0], len(to_rate) * RATE_SECONDS[1]),
-        edit_seconds=keep * avg_mp * EDIT_SECONDS_PER_MEGAPIXEL,
+        edit_seconds=keep * avg_mp * EDIT_SECONDS_PER_MEGAPIXEL * 1.25,
+        adjust_needed=adjust_needed,
     )

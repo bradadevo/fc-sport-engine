@@ -8,7 +8,7 @@ from PIL import Image
 
 import time
 
-from match_cull import analysis, crops, enhance, estimate, images, looks, select, style
+from match_cull import adjust, analysis, crops, enhance, estimate, images, looks, select, style
 from sports_reel import vision
 
 SIZE_MENU = list(crops.SIZES.values())
@@ -102,14 +102,9 @@ def render(img: Image.Image, box: crops.Box, size: crops.OutputSize, lut: looks.
            subject: tuple[float, float, float, float] | None = None,
            my_style: style.Style | None = None, punchy: bool = False, softer: bool = False) -> Image.Image:
     """Crop -> enhance -> look -> final size -> sharpen. subject is the
-    normalized (xmin, ymin, xmax, ymax) box of the players, used to judge
-    exposure on them rather than on the field or sky."""
-    subject_px = None
-    if subject:
-        w, h = img.size
-        subject_px = (round(subject[0] * w) - box[0], round(subject[1] * h) - box[1],
-                      round(subject[2] * w) - box[0], round(subject[3] * h) - box[1])
-    out = enhance.enhance(img.crop(box), subject_px)
+    normalized (xmin, ymin, xmax, ymax) box of the players, used for the
+    gentle local lift on dark players."""
+    out = enhance.enhance(img.crop(box), subject_in_crop(img, box, subject))
     if lut is not None:
         out = looks.apply_look(out, lut)
     if punchy:
@@ -118,11 +113,7 @@ def render(img: Image.Image, box: crops.Box, size: crops.OutputSize, lut: looks.
         out = enhance.soften_contrast(out)
     if my_style is not None:
         out = style.apply_style(out, my_style)
-    if size.pixels:
-        out = out.resize(size.pixels, Image.Resampling.LANCZOS)
-    elif size.match_source and out.size != img.size:
-        out = out.resize(img.size, Image.Resampling.LANCZOS)
-    return enhance.output_sharpen(out)
+    return finish(out, img, size)
 
 
 def learn_style_command(args) -> None:
@@ -152,6 +143,25 @@ def learn_style_command(args) -> None:
         print(f"\nGemini tokens used: {sum(usage):,}")
     print("\nEvery run now nudges edits toward this look (turn off with --no-style). Photos rated before\n"
           "today keep their old scores; add --refresh to re-rate them with your taste in mind.")
+
+
+def subject_in_crop(img: Image.Image, box: crops.Box,
+                    subject: tuple[float, float, float, float] | None) -> crops.Box | None:
+    """The players' box (normalized to the whole photo) in the crop's pixels."""
+    if not subject:
+        return None
+    w, h = img.size
+    return (round(subject[0] * w) - box[0], round(subject[1] * h) - box[1],
+            round(subject[2] * w) - box[0], round(subject[3] * h) - box[1])
+
+
+def finish(out: Image.Image, img: Image.Image, size: crops.OutputSize) -> Image.Image:
+    """Final size (if the output size needs one), then light sharpening."""
+    if size.pixels:
+        out = out.resize(size.pixels, Image.Resampling.LANCZOS)
+    elif size.match_source and out.size != img.size:
+        out = out.resize(img.size, Image.Resampling.LANCZOS)
+    return enhance.output_sharpen(out)
 
 
 def render_original(img: Image.Image, box: crops.Box, size: crops.OutputSize) -> Image.Image:
@@ -188,12 +198,15 @@ def main(argv=None) -> None:
     cache = vision.DetectionCache(args.folder, analysis.CACHE_FILENAME, analysis.PhotoAssessment)
     remembered = set() if args.refresh else {p for p in photo_paths if cache.get(p) is not None}
     keep_count = len(photo_paths) if keep == select.KEEP_ALL else min(keep, len(photo_paths))
-    plan = estimate.estimate(photo_paths, remembered, keep_count, cache.average_tokens())
+    adjust_cache_check = vision.DetectionCache(args.folder, adjust.CACHE_FILENAME, adjust.Adjustments)
+    suggested_before = 0 if args.refresh else sum(1 for p in photo_paths if adjust_cache_check.get(p) is not None)
+    plan = estimate.estimate(photo_paths, remembered, keep_count, cache.average_tokens(),
+                             adjust_needed=max(0, keep_count - suggested_before))
     print("\nEstimate:")
     print("\n".join(plan.lines()))
     if args.estimate:
         return
-    if plan.to_rate and not os.environ.get("GEMINI_API_KEY"):
+    if (plan.to_rate or plan.adjust_needed) and not os.environ.get("GEMINI_API_KEY"):
         sys.exit("Error: GEMINI_API_KEY is not set. Open a new Terminal window and try again.")
     if not args.yes and sys.stdin.isatty():
         if ask("\nStart? [Y/n]: ").strip().lower() in ("n", "no"):
@@ -267,7 +280,8 @@ def main(argv=None) -> None:
               f"{select.MIN_KEEP_SCORE}/10 or better.)")
 
     print(f"\nEditing keepers into {out_dir} ...")
-    outputs: dict[str, tuple[str, str, str, str, str | None, str | None]] = {}
+    outputs: dict[str, tuple] = {}
+    adjust_cache = vision.DetectionCache(args.folder, adjust.CACHE_FILENAME, adjust.Adjustments)
     for idx, cand in enumerate(keepers, 1):
         a = assessments[cand.path]
         best, second = analysis.resolve_looks(a, look_names)
@@ -294,32 +308,52 @@ def main(argv=None) -> None:
         # With LUTs, C is the natural alternative; without, it is the punchier natural edit
         images.save_jpeg(render(img, box_a, size, None, subject, my_style, punchy=not look_names),
                          str(out_dir / file_c), exif)
+
+        # D: Gemini looks at the natural A-crop edit and suggests slider moves,
+        # which our code applies (nothing is redrawn)
+        file_d = f"{stem}_D.jpg"
+        sub_px = subject_in_crop(img, box_a, subject)
+        d_base = enhance.enhance(img.crop(box_a), sub_px)
+        adjustments = None if args.refresh else adjust_cache.get(cand.path)
+        if adjustments is None:
+            try:
+                usage: list[int] = []
+                adjustments = adjust.suggest(client, d_base, args.model, taste_notes, usage)
+                adjust_cache.put(cand.path, adjustments, tokens=sum(usage))
+                tokens_used.extend(usage)
+            except Exception as e:
+                adjustments = adjust.no_changes(f"no suggestions (Gemini failed: {str(e)[:60]})")
+        images.save_jpeg(finish(adjust.apply(d_base, adjustments, sub_px), img, size),
+                         str(out_dir / file_d), exif)
+        d_note = f"{adjustments.summary()} ({adjustments.reason})"
         best, second = best or "natural", (second or "natural") + ", 10% less contrast"
         c_label = "natural" if look_names else "punchy"
-        outputs[cand.path] = (file_o, file_a, file_b, file_c, best, second)
+        outputs[cand.path] = (file_o, file_a, file_b, file_c, file_d, d_note, best, second)
         print(f"  [{idx}/{len(keepers)}] {stem}: O = original, {label_a}; A = {label_a}, {best}; "
               f"B = {label_b}, {second}; C = {label_a}, {c_label}")
+        print(f"      D = {label_a}, Gemini's adjustments: {d_note}")
 
     report = out_dir / "cull_report.csv"
     with open(report, "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerow(["photo", "kept", "score", "moment", "reason", "subject",
-                         "original_crop", "option_a", "look_a", "option_b", "look_b", "option_c", "note"])
+                         "original_crop", "option_a", "look_a", "option_b", "look_b", "option_c",
+                         "option_d", "d_adjustments", "note"])
         by_path = {c.path: c for c in candidates}
         for path in photo_paths:
             name = os.path.basename(path)
             if path in failures:
-                writer.writerow([name, "no", "", "", failures[path], "", "", "", "", "", "", "", ""])
+                writer.writerow([name, "no", "", "", failures[path]] + [""] * 10)
                 continue
             a, cand = assessments[path], by_path[path]
-            file_o, file_a, file_b, file_c, best, second = outputs.get(path, ("", "", "", "", "", ""))
+            file_o, file_a, file_b, file_c, file_d, d_note, best, second = outputs.get(path, ("",) * 8)
             writer.writerow([name, "yes" if path in outputs else "no", a.score, cand.burst + 1,
                              a.reason, a.subject_description, file_o, file_a, best or "",
-                             file_b, second or "", file_c,
+                             file_b, second or "", file_c, file_d, d_note,
                              f"low resolution ({low_res[path]:.1f} MP): use the original file"
                              if path in low_res else ""])
 
-    print(f"\nDone. {len(keepers)} photos kept, each as O (original crop) + A, B, C edits, in:\n  {out_dir}")
+    print(f"\nDone. {len(keepers)} photos kept, each as O (original crop) + A, B, C, D edits, in:\n  {out_dir}")
     print(f"Scores and reasons for every photo: {report.name}")
     print(f"Took {estimate.format_duration(time.monotonic() - started)}; "
           f"Gemini tokens used this run: {sum(tokens_used):,} for {len(tokens_used)} ratings.")
