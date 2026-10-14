@@ -49,15 +49,51 @@ def create_client() -> genai.Client:
     return genai.Client(http_options=types.HttpOptions(timeout=REQUEST_TIMEOUT_MS))
 
 
+def image_to_jpeg(img: Image.Image) -> bytes:
+    """Downsizes an upright image and encodes it as JPEG for the model."""
+    img = img.convert("RGB")
+    img.thumbnail((INFERENCE_MAX_EDGE, INFERENCE_MAX_EDGE))
+    buf = io.BytesIO()
+    img.save(buf, format="JPEG", quality=85)
+    return buf.getvalue()
+
+
 def _inference_jpeg(image_path: str) -> bytes:
     """Auto-rotates per EXIF and downsizes, so the model sees the photo
     upright and its coordinates match the displayed image."""
     with Image.open(image_path) as img:
-        img = ImageOps.exif_transpose(img).convert("RGB")
-        img.thumbnail((INFERENCE_MAX_EDGE, INFERENCE_MAX_EDGE))
-        buf = io.BytesIO()
-        img.save(buf, format="JPEG", quality=85)
-    return buf.getvalue()
+        return image_to_jpeg(ImageOps.exif_transpose(img))
+
+
+def generate_structured(client: genai.Client, image_bytes: bytes, prompt: str, schema,
+                        model: str = DEFAULT_MODEL, sleep=time.sleep, usage: list | None = None):
+    """Sends one JPEG plus a prompt and parses the reply into the pydantic
+    schema, retrying rate limits and outages (429 / 500 / 503) with
+    exponential backoff. Raises once retries are spent. If usage is a list,
+    the call's total token count is appended to it."""
+    for attempt in range(MAX_RETRIES + 1):
+        try:
+            response = client.models.generate_content(
+                model=model,
+                contents=[
+                    types.Part.from_bytes(data=image_bytes, mime_type="image/jpeg"),
+                    prompt,
+                ],
+                config=types.GenerateContentConfig(
+                    response_mime_type="application/json",
+                    response_schema=schema,
+                    temperature=0.1,
+                ),
+            )
+            parsed = schema.model_validate_json(response.text)
+            if usage is not None:
+                meta = getattr(response, "usage_metadata", None)
+                usage.append(getattr(meta, "total_token_count", None) or 0)
+            return parsed
+        except errors.APIError as e:
+            if e.code not in RETRYABLE_STATUS_CODES or attempt == MAX_RETRIES:
+                raise
+            sleep(2 ** attempt)
 
 
 def analyze_photo(
@@ -66,29 +102,9 @@ def analyze_photo(
     model: str = DEFAULT_MODEL,
     sleep=time.sleep,
 ) -> SoccerSubjectDetection:
-    """Asks Gemini for the subject box, retrying rate limits and outages
-    (429 / 500 / 503) with exponential backoff. Raises once retries are spent."""
-    image_bytes = _inference_jpeg(image_path)
-
-    for attempt in range(MAX_RETRIES + 1):
-        try:
-            response = client.models.generate_content(
-                model=model,
-                contents=[
-                    types.Part.from_bytes(data=image_bytes, mime_type="image/jpeg"),
-                    PROMPT,
-                ],
-                config=types.GenerateContentConfig(
-                    response_mime_type="application/json",
-                    response_schema=SoccerSubjectDetection,
-                    temperature=0.1,
-                ),
-            )
-            return SoccerSubjectDetection.model_validate_json(response.text)
-        except errors.APIError as e:
-            if e.code not in RETRYABLE_STATUS_CODES or attempt == MAX_RETRIES:
-                raise
-            sleep(2 ** attempt)
+    """Asks Gemini for the subject box. Raises once retries are spent."""
+    return generate_structured(client, _inference_jpeg(image_path), PROMPT,
+                               SoccerSubjectDetection, model=model, sleep=sleep)
 
 
 def analyze_photo_or_center(
@@ -107,12 +123,13 @@ def analyze_photo_or_center(
 
 
 class DetectionCache:
-    """Remembers successful detections in a hidden file in the photo folder,
-    so a rerun only asks Gemini about photos that are new, changed, or failed
-    last time. Center-crop fallbacks are never stored."""
+    """Remembers successful detections in a hidden JSON file, so a rerun only
+    asks Gemini about photos that are new, changed, or failed last time.
+    Center-crop fallbacks are never stored."""
 
-    def __init__(self, photos_dir: str):
-        self.path = Path(photos_dir) / CACHE_FILENAME
+    def __init__(self, cache_dir: str, filename: str = CACHE_FILENAME, schema=SoccerSubjectDetection):
+        self.path = Path(cache_dir) / filename
+        self.schema = schema
         self.entries: dict[str, dict] = {}
         try:
             self.entries = json.loads(self.path.read_text())
@@ -124,23 +141,29 @@ class DetectionCache:
         stat = os.stat(image_path)
         return [stat.st_size, stat.st_mtime_ns]
 
-    def get(self, image_path: str) -> SoccerSubjectDetection | None:
+    def get(self, image_path: str):
         entry = self.entries.get(os.path.basename(image_path))
         if not entry or entry.get("fingerprint") != self._fingerprint(image_path):
             return None
         try:
-            return SoccerSubjectDetection.model_validate(entry["detection"])
+            return self.schema.model_validate(entry["detection"])
         except Exception:
             return None
 
-    def put(self, image_path: str, detection: SoccerSubjectDetection) -> None:
-        """Stores a detection and saves straight away, so progress survives
-        an interrupted run."""
-        self.entries[os.path.basename(image_path)] = {
-            "fingerprint": self._fingerprint(image_path),
-            "detection": detection.model_dump(),
-        }
+    def put(self, image_path: str, detection, tokens: int | None = None) -> None:
+        """Stores a detection (and the tokens it cost, if known) and saves
+        straight away, so progress survives an interrupted run."""
+        entry = {"fingerprint": self._fingerprint(image_path), "detection": detection.model_dump()}
+        if tokens:
+            entry["tokens"] = tokens
+        self.entries[os.path.basename(image_path)] = entry
         try:
+            self.path.parent.mkdir(parents=True, exist_ok=True)
             self.path.write_text(json.dumps(self.entries, indent=1))
         except OSError:
             pass  # a read-only folder just means nothing is remembered
+
+    def average_tokens(self) -> float | None:
+        """Mean tokens per photo over the remembered ratings that recorded it."""
+        counts = [e["tokens"] for e in self.entries.values() if e.get("tokens")]
+        return sum(counts) / len(counts) if counts else None
